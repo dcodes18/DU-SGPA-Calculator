@@ -34,6 +34,7 @@ body {
   border-radius: 18px;
 }
 
+
 /* ---------- Headings ---------- */
 h1 {
   font-weight: 700;
@@ -44,6 +45,15 @@ h1 {
   display: block;
   margin-top: 40px;
   margin-bottom: 20px;
+}
+
+/* This block ONLY runs on mobile screens */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 38px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
 }
 
 .subtitle {
@@ -133,9 +143,6 @@ tr:nth-child(odd) {
   background: rgba(51, 65, 85, 0.85);
 }
 
-tbody tr:hover {
-  background: #ffffff;
-}
 
 /* ---------- Form Controls ---------- */
 input,
