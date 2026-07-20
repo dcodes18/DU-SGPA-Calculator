@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <!-- Page Information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DU SGPA Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <!-- Main App Container -->
+    <div class="app">
+
+      <h1>DU SGPA Calculator</h1>
+    
+    <!-- Course Selection -->
+    <div class="modal course-modal">
+      
+      <h2 class="subtitle">
+      Choose your course type
+      </h2>
+
+      <div class="course-buttons">
+        <button class="course-btn"
+                data-course="honours"
+                id="honoursBtn">
+          Honours Degree
+        </button>
+
+        <button class="course-btn"
+                data-course="programme"
+                id="programmeBtn">
+          Programme Degree
+        </button>
+      </div>
+    </div>
+
+    <div class="modal semester-modal hidden">
+
+      <h2 class="subtitle">
+        Choose your semester
+      </h2>
+
+    <!-- Semester Selection -->
+    <div class="semester-buttons">
+
+      <button class="semester-btn" data-semester="1">Semester 1</button>
+      <button class="semester-btn" data-semester="2">Semester 2</button>
+      <button class="semester-btn" data-semester="3">Semester 3</button>
+      <button class="semester-btn" data-semester="4">Semester 4</button>
+      <button class="semester-btn" data-semester="5">Semester 5</button>
+      <button class="semester-btn" data-semester="6">Semester 6</button>
+
+    </div>
+    </div>
+
+    <div class="modal action-modal hidden">
+
+      <h2 class="subtitle">
+        Choose the action you want to perform
+      </h2>
+
+      <!-- Action Selection -->
+      <div class="action-buttons">
+
+        <button id="estimatedSGPABtn">
+          Calculate Estimated SGPA
+        </button>
+
+        <button id="targetMarksBtn">
+          Calculate Target Marks
+        </button>
+      </div>
+    </div>
+
+    <div class="modal target-modal hidden">
+
+      <h2 class="subtitle">
+        Choose your target SGPA
+      </h2>
+
+      <!-- Target Selection -->
+      <div class="target-buttons">
+
+        <button class="target-btn" data-target="6">6</button>
+        <button class="target-btn" data-target="7">7</button>
+        <button class="target-btn" data-target="8">8</button>
+        <button class="target-btn" data-target="9">9</button>
+        <button class="target-btn" data-target="10">10</button>
+      </div>
+    </div>
+
+    <!-- Calculator -->
+    <div class="modal calculator-modal hidden">
+      <h2 id="calculator-heading">Estimated SGPA Calculator</h2>
+
+      <!-- Marks Entry Table -->
+      <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Subject</th>
+            <th>Type</th>
+            <th>Credits</th>
+            <th>IA Total</th>
+            <th>IA Marks Scored</th>
+            <th>CA/Practical Total</th>
+            <th>CA/Practical Marks Scored</th>
+            <th>Theory Total</th>
+            <th>Expected Theory Marks</th>
+            <th class="total-column">Total</th>
+            <th class="gp-column">Grade Points</th>
+            <th class="grade-column">Grade</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <!-- SUbject Rows -->
+          <tr class="subject-row" id="subject1">
+            <td>1</td>
+            <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
+            <td class="subject-type">DSC</td>
+            <td class="credit-row">4</td>
+            <td class="ia-total">30</td>
+            <td><input 
+              class="marks-input ia-marks" 
+              type="number" 
+              min="0" 
+              max="30" 
+              placeholder="0">
+           </td>
+           <td class="practical-total">40</td>
+           <td><input 
+             class="marks-input practical-marks" 
+             type="number" 
+             min="0" 
+             max="40" 
+             placeholder="0">
+           </td>
+           <td class="theory-total">90</td>
+           <td><input 
+             class="marks-input theory-marks" 
+             type="number" 
+             min="0" 
+             max="90" 
+             placeholder="0">
+           </td>
+           <td class="subject-total total-column">--</td>
+           <td class="grade-points gp-column">--</td>
+           <td class="grade grade-column">--</td>
+         </tr>
+
+         <tr class="subject-row" id="subject2">
+           <td>2</td>
+           <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
+           <td class="subject-type">DSC</td>
+           <td class="credit-row">4</td>
+           <td class="ia-total">30</td>
+           <td><input 
+             class="marks-input ia-marks" 
+             type="number" 
+             min="0" 
+             max="30" 
+             placeholder="0">
+           </td>
+           <td class="practical-total">40</td>
+           <td><input 
+             class="marks-input practical-marks" 
+             type="number" 
+             min="0" 
+             max="40" 
+             placeholder="0">
+           </td>
+           <td class="theory-total">90</td>
+           <td><input 
+             class="marks-input theory-marks" 
+             type="number" 
+             min="0" 
+             max="90" 
+             placeholder="0">
+           </td>
+           <td class="subject-total total-column">--</td>
+           <td class="grade-points gp-column">--</td>
+           <td class="grade grade-column">--</td>
+         </tr>
+
+         <tr class="subject-row" id="subject3">
+           <td>3</td>
+           <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
+           <td class="subject-type">DSC</td>
+           <td class="credit-row">4</td>
+           <td class="ia-total">30</td>
+           <td><input class="marks-input ia-marks" 
+             type="number"
+             min="0" 
+             max="30" 
+             placeholder="0">
+           </td>
+           <td class="practical-total">40</td>
+           <td><input 
+             class="marks-input practical-marks" 
+             type="number" 
+             min="0" 
+             max="40" 
+             placeholder="0">
+           </td>
+           <td class="theory-total">90</td>
+           <td><input 
+             class="marks-input theory-marks" 
+             type="number" 
+             min="0" 
+             max="90" 
+             placeholder="0">
+           </td>
+           <td class="subject-total total-column">--</td>
+           <td class="grade-points gp-column">--</td>
+           <td class="grade grade-column">--</td>
+         </tr>
+
+         <tr class="subject-row" id="subject4">
+         <td>4</td>
+         <td><input class="subject-name" type="text" placeholder="Subject Name"> </td>
+         <td class="subject-type">
+          <select class="dse-ge-type">
+            <option value=""disabled selected>Select your type</option>
+            <option value="dse">DSE</option>
+            <option value="ge">GE</option>
+          </select>
+         </td>
+         <td class="credit-row">4</td>
+         <td class="ia-total">30</td>
+         <td><input 
+           class="marks-input ia-marks" 
+           type="number"
+           min="0" 
+           max="30" 
+           placeholder="0">
+         </td>
+         <td class="practical-total">40</td>
+         <td><input 
+           class="marks-input practical-marks" 
+           type="number" 
+           min="0" 
+           max="40" 
+           placeholder="0">
+         </td>
+         <td class="theory-total">90</td>
+         <td><input 
+           class="marks-input theory-marks" 
+           type="number" 
+           min="0" 
+           max="90" 
+           placeholder="0">
+         </td>
+         <td class="subject-total total-column">--</td>
+         <td class="grade-points gp-column">--</td>
+         <td class="grade grade-column">--</td>
+       </tr>
+
+       <tr class="subject-row" id="subject5">
+         <td>5</td>
+         <td><input class="subject-name" type="text" placeholder="Subject Name"> </td>
+         <td class="subject-type">
+          <select class="sec-vac-type">
+            <option value=""disabled selected>Select your type</option>
+            <option value="secprac">SEC Practical</option>
+            <option value="secnonprac">SEC Non-Practical</option>
+          </select>
+         </td>
+         <td class="credit-row">2</td>
+         <td class="ia-total">10</td>
+         <td><input 
+           class="marks-input ia-marks" 
+           type="number"
+           min="0" 
+           max="10" 
+           placeholder="0">
+         </td>
+         <td class="practical-total">40</td>
+         <td><input 
+           class="marks-input practical-marks" 
+           type="number" 
+           min="0" 
+           max="40" 
+           placeholder="0">
+         </td>
+         <td class="theory-total">30</td>
+         <td><input 
+           class="marks-input theory-marks" 
+           type="number" 
+           min="0" 
+           max="30" 
+           placeholder="0">
+         </td>
+         <td class="subject-total total-column">--</td>
+         <td class="grade-points gp-column">--</td>
+         <td class="grade grade-column">--</td>
+       </tr>
+
+       <tr class="subject-row" id="subject6">
+         <td>6</td>
+         <td><input class="subject-name" type="text" placeholder="Subject Name"> </td>
+         <td class="subject-type">
+          <select class="sec-vac-type">
+            <option value=""disabled selected>Select your type</option>
+            <option value="vacprac">VAC Practical</option>
+            <option value="vacnonprac">VAC Non-Practical</option>
+          </select>
+         </td>
+         <td class="credit-row">2</td>
+         <td class="ia-total">10</td>
+         <td><input 
+           class="marks-input ia-marks" 
+           type="number" 
+           min="0" 
+           max="10" 
+           placeholder="0">
+         </td>
+         <td class="practical-total">40</td>
+         <td><input 
+           class="marks-input practical-marks" 
+           type="number" 
+           min="0" 
+           max="40" 
+           placeholder="0">
+         </td>
+         <td class="theory-total">30</td>
+         <td><input 
+           class="marks-input theory-marks" 
+           type="number" 
+           min="0" 
+           max="30" 
+           placeholder="0">
+         </td>
+         <td class="subject-total total-column">--</td>
+         <td class="grade-points gp-column">--</td>
+         <td class="grade grade-column">--</td>
+       </tr>
+
+       <tr class="subject-row" id="subject7">
+         <td>7</td>
+         <td class="subject-name">
+          <select class="aec-subject">
+            <option value=""disabled selected>Subject Name</option>
+            <option value="evs">EVS</option>
+            <option value="hindi">Hindi</option>
+          </select>
+         </td>
+         <td class="subject-type">AEC</td>
+         <td class="credit-row">2</td>
+         <td class="ia-total">10</td>
+         <td><input 
+           class="marks-input ia-marks" 
+           type="number" 
+           min="0" 
+           max="10" 
+           placeholder="0">
+         </td>
+         <td class="practical-total">40</td>
+         <td><input 
+           class="marks-input practical-marks" 
+           type="number" 
+           min="0" 
+           max="40" 
+           placeholder="0">
+         </td>
+         <td class="theory-total">30</td>
+         <td><input 
+           class="marks-input theory-marks" 
+           type="number" 
+           min="0" 
+           max="30" 
+           placeholder="0">
+         </td>
+         <td class="subject-total total-column">--</td>
+         <td class="grade-points gp-column">--</td>
+         <td class="grade grade-column">--</td>
+       </tr>
+
+        </tbody>
+      </table>
+      </div>
+
+      <!-- Estimated SGPA Display -->
+      <div class="sgpa-card" id="sgpa-card">
+        <h3>Estimated SGPA</h3>
+        <p class="sgpa-value">--</p>
+      </div>
+    
+    </div>
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+  
+  </body>
+</html>
