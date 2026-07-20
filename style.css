@@ -40,6 +40,8 @@ h1 {
   color: #1f2937;
   font-size: 52px;
   text-align: center;
+  width: 100%;
+  display: block;
   margin-top: 40px;
   margin-bottom: 20px;
 }
