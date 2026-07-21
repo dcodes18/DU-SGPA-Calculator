@@ -508,7 +508,7 @@ function calculateTargetSubject(row){
 
   const requiredPercentage = targetGradePoint * 10 - 10;
 
-  const requiredTotal = Math.ceil(maxMarks * requiredPercentage / 100);
+  const requiredTotal = (maxMarks * requiredPercentage / 100);
 
   const requiredTheory =
     requiredTotal - iaMarks - practicalMarks;
@@ -522,7 +522,7 @@ function calculateTargetSubject(row){
   }
 
   else{
-    theoryInput.value = requiredTheory;
+    theoryInput.value = requiredTheory.toFixed(1);
   }
 
 }
