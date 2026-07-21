@@ -353,6 +353,58 @@ function attachAECListeners() {
 
 }
 
+function attachGEListeners() {
+  document.querySelectorAll(".dse-ge-type").forEach(function(select){
+
+    select.addEventListener("change",function(){
+
+        const row = select.closest(".subject-row");
+
+        const iaTotal = row.querySelector(".ia-total");
+        const practicalTotal = row.querySelector(".practical-total");
+        const theoryTotal = row.querySelector(".theory-total");
+
+        const iaInput = row.querySelector(".ia-marks");
+        const practicalInput = row.querySelector(".practical-marks");
+        const theoryInput = row.querySelector(".theory-marks");
+
+        if(select.value === "gePractical"){
+
+            iaTotal.textContent = "20";
+            practicalTotal.textContent = "80";
+            theoryTotal.textContent = "60";
+
+            iaInput.max = 20;
+            practicalInput.max = 80;
+            theoryInput.max = 60;
+        }
+
+        else{
+
+            iaTotal.textContent = "30";
+            practicalTotal.textContent = "40";
+            theoryTotal.textContent = "90";
+
+            iaInput.max = 30;
+            practicalInput.max = 40;
+            theoryInput.max = 90;
+        }
+
+        iaInput.value = "";
+        practicalInput.value = "";
+        theoryInput.value = "";
+
+        row.querySelector(".subject-total").textContent = "--";
+        row.querySelector(".grade-points").textContent = "--";
+        row.querySelector(".grade").textContent = "--";
+
+        calculateSGPA();
+
+    });
+
+});
+}
+
 
 // Calculator Setup
 function updateCalculator() {
@@ -404,7 +456,13 @@ function updateCalculator() {
 
     row4.querySelector(".subject-type").textContent = "DSE";
 
-    row5.querySelector(".subject-type").textContent = "GE";
+    row5.querySelector(".subject-type").innerHTML = `
+    <select class="dse-ge-type">
+      <option value="" disabled selected>Select your type</option>
+      <option value="geTheory">GE (Theory)</option>
+      <option value="gePractical">GE (Theory + Practical)</option>
+    </select>
+    `;
 
     row5.querySelector(".credit-row").textContent = "4";
     row5.querySelector(".ia-total").textContent = "30";
@@ -432,8 +490,13 @@ function updateCalculator() {
 
      if (selectedCourse === "programme") {
 
-      row4.querySelector(".subject-type").textContent = "GE";
-
+      row4.querySelector(".subject-type").innerHTML = `
+      <select class="dse-ge-type">
+        <option value="" disabled selected>Select your type</option>
+        <option value="geTheory">GE (Theory)</option>
+        <option value="gePractical">GE (Theory + Practical)</option>
+      </select>
+      `;
     }
 
     else {
@@ -442,7 +505,8 @@ function updateCalculator() {
         <select class="dse-ge-type">
           <option value="" disabled selected>Select your type</option>
           <option value="dse">DSE</option>
-          <option value="ge">GE</option>
+          <option value="ge">GE (Theory)</option>
+          <option value="gePractical">GE (Theory + Practical)</option>
         </select>
       `;
 
@@ -455,12 +519,19 @@ function updateCalculator() {
 
      row7.style.display = "";
 
-     row4.querySelector(".subject-type").textContent = "GE";
+     row4.querySelector(".subject-type").innerHTML = `
+     <select class="dse-ge-type">
+       <option value="" disabled selected>Select your type</option>
+       <option value="geTheory">GE (Theory)</option>
+       <option value="gePractical">GE (Theory + Practical)</option>
+     </select>
+      `;
 
   }
 
   attachSecVacListeners();
   attachAECListeners();
+  attachGEListeners
 
 }
 
