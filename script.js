@@ -130,9 +130,10 @@ function calculateSubject(row){
   const gradePointCell = row.querySelector(".grade-points");
   const gradeCell = row.querySelector(".grade");
 
-  const iaMarks = Math.min(Number(iaInput.value), Number(iaInput.max));
-  const practicalMarks = Math.min(Number(practicalInput.value), Number(practicalInput.max));
-  const theoryMarks = Math.min(Number(theoryInput.value), Number(theoryInput.max));
+  const iaMarks = Math.min(parseFloat(iaInput.value) || 0, parseFloat(iaInput.max));
+  const practicalMarks = Math.min(parseFloat(practicalInput.value) || 0, parseFloat(practicalInput.max));
+  const theoryMarks = Math.min(parseFloat(theoryInput.value) || 0, parseFloat(theoryInput.max));
+
 
   if (Number(iaInput.value) > Number(iaInput.max)) {
     iaInput.value = iaInput.max;
