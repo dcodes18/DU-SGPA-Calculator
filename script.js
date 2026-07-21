@@ -134,9 +134,17 @@ function calculateSubject(row){
   const practicalMarks = Math.min(Number(practicalInput.value), Number(practicalInput.max));
   const theoryMarks = Math.min(Number(theoryInput.value), Number(theoryInput.max));
 
-  iaInput.value = iaMarks;
-  practicalInput.value = practicalMarks;
-  theoryInput.value = theoryMarks;
+  if (Number(iaInput.value) > Number(iaInput.max)) {
+    iaInput.value = iaInput.max;
+  }
+
+  if (Number(practicalInput.value) > Number(practicalInput.max)) {
+    practicalInput.value = practicalInput.max;
+  }
+
+  if (Number(theoryInput.value) > Number(theoryInput.max)) {
+    theoryInput.value = theoryInput.max;
+  }
 
   const totalMarks = iaMarks + practicalMarks + theoryMarks;
 
