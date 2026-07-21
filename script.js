@@ -522,7 +522,7 @@ function calculateTargetSubject(row){
   }
 
   else{
-    theoryInput.value = requiredTheory.toFixed(1);
+    theoryInput.value = requiredTheory.toFixed(2);
   }
 
 }
