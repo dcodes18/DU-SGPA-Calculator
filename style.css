@@ -212,3 +212,105 @@ h2 {
   margin-bottom: 35px;
   color: white;
 }
+
+
+/* Keep target combinations inside the calculator */
+.calculator-modal {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#target-combinations {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.target-results-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.target-results-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.target-results-table th,
+.target-results-table td {
+  padding: 8px 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+/* =========================
+   TARGET SGPA TABLE
+========================= */
+
+.calculator-modal {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Hide difficulty in Estimated SGPA mode */
+.calculator-modal .difficulty-column {
+  display: none;
+}
+
+/* Show difficulty in Target SGPA mode */
+.calculator-modal.target-mode .difficulty-column {
+  display: table-cell;
+}
+
+/* Hide theory columns in Target SGPA mode */
+.calculator-modal.target-mode .theory-total-column,
+.calculator-modal.target-mode .theory-marks-column {
+  display: none !important;
+}
+
+/* Difficulty dropdown */
+.subject-difficulty {
+  min-width: 120px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Target combinations container */
+#target-combinations {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Allow the results table to scroll horizontally */
+.target-results-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Results table */
+.target-results-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.target-results-table th,
+.target-results-table td {
+  padding: 8px 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
