@@ -1,3 +1,4 @@
+
 /* =========================
    MODAL ELEMENTS
 ========================= */
@@ -31,6 +32,115 @@ let selectedSemester = "";
 let selectedCourse = "";
 let targetGradePoint = "";
 let calculatorMode = "";
+let targetModel = "difficulty";
+
+/* =========================
+   TARGET MODEL UI
+========================= */
+function setupTargetModelUI() {
+  const tableContainer = document.querySelector(".table-container");
+
+  if (!tableContainer) return;
+
+  // Create the model selection buttons.
+  const modelControls = document.createElement("div");
+  modelControls.className = "target-model-controls";
+
+  modelControls.innerHTML = `
+    <h3>Choose your target model</h3>
+
+    <button
+      type="button"
+      class="target-model-btn active"
+      data-model="difficulty"
+    >
+      Difficulty-Based Model
+    </button>
+
+    <button
+      type="button"
+      class="target-model-btn"
+      data-model="grade-point"
+    >
+      Grade Point-Based Model
+    </button>
+  `;
+
+  tableContainer.parentNode.insertBefore(
+    modelControls,
+    tableContainer
+  );
+
+  // Add the Maximum GP heading.
+  const headerRow = document.querySelector(
+    ".calculator-modal thead tr"
+  );
+
+  if (headerRow) {
+    const difficultyHeader = headerRow.querySelector(
+      ".difficulty-column"
+    );
+
+    if (difficultyHeader) {
+      const gradeCapHeader = document.createElement("th");
+
+      gradeCapHeader.className = "grade-cap-column";
+      gradeCapHeader.textContent = "Maximum GP";
+
+      difficultyHeader.after(gradeCapHeader);
+    }
+  }
+
+  // Add a Maximum GP dropdown to every subject row.
+  subjectRows.forEach(function(row) {
+    const difficultyCell = row.querySelector(
+      ".difficulty-column"
+    );
+
+    if (!difficultyCell) return;
+
+    const gradeCapCell = document.createElement("td");
+    gradeCapCell.className = "grade-cap-column";
+
+    gradeCapCell.innerHTML = `
+      <select class="subject-max-gp">
+        <option value="">No limit</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+    `;
+
+    difficultyCell.after(gradeCapCell);
+  });
+}
+
+setupTargetModelUI();
+
+/* =========================
+   TARGET MODEL BUTTONS
+========================= */
+document.addEventListener("click", function(event) {
+  const button = event.target.closest(".target-model-btn");
+
+  if (!button) return;
+
+  targetModel = button.dataset.model;
+
+  document.querySelectorAll(".target-model-btn")
+    .forEach(function(item) {
+      item.classList.toggle("active", item === button);
+    });
+
+  calculatorModal.classList.toggle(
+    "grade-point-model",
+    targetModel === "grade-point"
+  );
+
+  calculateTargetCombinations();
+});
 
 /* =========================
    COURSE SELECTION
@@ -84,6 +194,15 @@ targetButtons.forEach(function(button) {
   button.addEventListener("click", function() {
     targetGradePoint = Number(button.dataset.target);
     calculatorMode = "target";
+    targetModel = "difficulty";
+
+    document.querySelectorAll(".target-model-btn")
+      .forEach(function(item) {
+        item.classList.toggle(
+          "active",
+          item.dataset.model === "difficulty"
+        );
+      });
 
     targetModal.classList.add("hidden");
     calculatorModal.classList.remove("hidden");
@@ -100,6 +219,7 @@ document.addEventListener("input", function(event) {
   if (!event.target.matches(".marks-input")) return;
 
   const row = event.target.closest(".subject-row");
+
   if (!row) return;
 
   if (calculatorMode === "estimate") {
@@ -151,10 +271,16 @@ function getGrade(percentage) {
    MARKS INPUT HELPER
 ========================= */
 function getInputMarks(input) {
-  const maximum = input.max === "" ? Infinity : Number(input.max);
+  const maximum = input.max === ""
+    ? Infinity
+    : Number(input.max);
+
   const entered = Number(input.value) || 0;
 
-  return Math.min(Math.max(entered, 0), maximum);
+  return Math.min(
+    Math.max(entered, 0),
+    maximum
+  );
 }
 
 /* =========================
@@ -191,8 +317,11 @@ function calculateSubject(row) {
     theoryInput.value = theoryInput.max;
   }
 
-  const totalMarks = iaMarks + practicalMarks + theoryMarks;
-  const maximumMarks = iaTotal + practicalTotal + theoryTotal;
+  const totalMarks =
+    iaMarks + practicalMarks + theoryMarks;
+
+  const maximumMarks =
+    iaTotal + practicalTotal + theoryTotal;
 
   const percentage = maximumMarks > 0
     ? (totalMarks / maximumMarks) * 100
@@ -203,8 +332,11 @@ function calculateSubject(row) {
   row.querySelector(".subject-total").textContent =
     Number(totalMarks.toFixed(2)).toString();
 
-  row.querySelector(".grade-points").textContent = result.gradePoint;
-  row.querySelector(".grade").textContent = result.grade;
+  row.querySelector(".grade-points").textContent =
+    result.gradePoint;
+
+  row.querySelector(".grade").textContent =
+    result.grade;
 }
 
 function calculateAllSubjects() {
@@ -244,7 +376,8 @@ function calculateSGPA() {
     return;
   }
 
-  sgpaCell.textContent = (weightedSum / totalCredits).toFixed(2);
+  sgpaCell.textContent =
+    (weightedSum / totalCredits).toFixed(2);
 }
 
 /* =========================
@@ -291,7 +424,10 @@ document.addEventListener("change", function(event) {
   if (!row) return;
 
   if (select.matches(".sec-vac-type")) {
-    if (select.value === "secprac" || select.value === "vacprac") {
+    if (
+      select.value === "secprac" ||
+      select.value === "vacprac"
+    ) {
       setSubjectTotals(row, 0, 80, 0);
     } else {
       setSubjectTotals(row, 10, 40, 30);
@@ -314,8 +450,11 @@ document.addEventListener("change", function(event) {
     }
   }
 
-  else if (select.matches(".subject-difficulty")) {
-    // Difficulty affects ranking only, not grade calculations.
+  else if (
+    select.matches(".subject-difficulty") ||
+    select.matches(".subject-max-gp")
+  ) {
+    // These dropdowns affect target combinations only.
   }
 
   else {
@@ -341,6 +480,12 @@ function updateCalculator() {
     calculatorMode === "target"
   );
 
+  calculatorModal.classList.toggle(
+    "grade-point-model",
+    calculatorMode === "target" &&
+    targetModel === "grade-point"
+  );
+
   const row4 = document.getElementById("subject4");
   const row5 = document.getElementById("subject5");
   const row6 = document.getElementById("subject6");
@@ -357,11 +502,15 @@ function updateCalculator() {
   document.querySelectorAll(
     ".total-column, .gp-column, .grade-column"
   ).forEach(function(item) {
-    item.style.display = calculatorMode === "target" ? "none" : "";
+    item.style.display =
+      calculatorMode === "target" ? "none" : "";
   });
 
   // Semester 5 and 6
-  if (selectedSemester === "5" || selectedSemester === "6") {
+  if (
+    selectedSemester === "5" ||
+    selectedSemester === "6"
+  ) {
     row7.style.display = "none";
 
     row4.querySelector(".subject-type").textContent = "DSE";
@@ -393,7 +542,10 @@ function updateCalculator() {
   }
 
   // Semester 3 and 4
-  else if (selectedSemester === "3" || selectedSemester === "4") {
+  else if (
+    selectedSemester === "3" ||
+    selectedSemester === "4"
+  ) {
     row7.style.display = "";
 
     if (selectedCourse === "programme") {
@@ -429,7 +581,9 @@ function updateCalculator() {
     `;
   }
 
-  const resultsBox = document.getElementById("target-combinations");
+  const resultsBox = document.getElementById(
+    "target-combinations"
+  );
 
   if (resultsBox && calculatorMode !== "target") {
     resultsBox.innerHTML = "";
@@ -455,15 +609,19 @@ function getPossibleTheoryOptions(row) {
   const theoryTotal =
     Number(row.querySelector(".theory-total").textContent) || 0;
 
-  const maximumMarks = iaTotal + practicalTotal + theoryTotal;
-  const internalMarks = iaMarks + practicalMarks;
+  const maximumMarks =
+    iaTotal + practicalTotal + theoryTotal;
 
-  // Store the minimum theory mark needed for each achievable grade point.
+  const internalMarks =
+    iaMarks + practicalMarks;
+
+  // Store the minimum theory mark needed for each achievable GP.
   const optionsByGrade = new Map();
+
   const maximumCents = Math.round(theoryTotal * 100);
 
   // Theory papers require at least 40% of their maximum marks.
-  // Subjects without a theory paper are exempt from this rule.
+  // Subjects without a theory paper are exempt.
   const minimumTheoryCents = theoryTotal > 0
     ? Math.ceil(theoryTotal * 40)
     : 0;
@@ -484,7 +642,7 @@ function getPossibleTheoryOptions(row) {
     // Do not recommend an overall failing grade.
     if (gradePoint === 0) continue;
 
-    // The first mark found for each grade point is the minimum for that GP.
+    // The first mark found for each GP is the minimum required.
     if (!optionsByGrade.has(gradePoint)) {
       optionsByGrade.set(gradePoint, {
         gradePoint,
@@ -498,13 +656,16 @@ function getPossibleTheoryOptions(row) {
   ) || 0;
 
   const nameElement = row.querySelector(".subject-name");
+
   let enteredName = "";
 
   if (nameElement) {
     if (nameElement.matches("input, select")) {
       enteredName = nameElement.value.trim();
     } else {
-      const nameControl = nameElement.querySelector("input, select");
+      const nameControl = nameElement.querySelector(
+        "input, select"
+      );
 
       enteredName = nameControl
         ? nameControl.value.trim()
@@ -516,13 +677,32 @@ function getPossibleTheoryOptions(row) {
     `Subject ${row.id.replace("subject", "")}`;
 
   const difficulty =
-    row.querySelector(".subject-difficulty")?.value || "moderate";
+    row.querySelector(".subject-difficulty")?.value ||
+    "moderate";
+
+  const maxGradePointValue =
+    row.querySelector(".subject-max-gp")?.value || "";
+
+  const maxGradePoint = maxGradePointValue
+    ? Number(maxGradePointValue)
+    : null;
+
+  const allOptions = [...optionsByGrade.values()];
+
+  // Apply the maximum GP restriction only in the GP-based model.
+  const options = targetModel === "grade-point" &&
+    maxGradePoint !== null
+      ? allOptions.filter(function(option) {
+          return option.gradePoint <= maxGradePoint;
+        })
+      : allOptions;
 
   return {
     name,
     credits,
     difficulty,
-    options: [...optionsByGrade.values()]
+    maxGradePoint,
+    options
   };
 }
 
@@ -533,7 +713,7 @@ function getDifficultyPenalty(difficulty, gradePoint) {
   // Lower penalty means a more preferred combination.
   // Difficult subjects are favored for lower GPs.
   // Easy subjects are favored for higher GPs.
-  // Moderate subjects are kept close to the selected target GP.
+  // Moderate subjects stay close to the selected target GP.
 
   if (difficulty === "difficult") {
     return gradePoint * 2;
@@ -543,20 +723,29 @@ function getDifficultyPenalty(difficulty, gradePoint) {
     return (10 - gradePoint) * 2;
   }
 
-  return Math.abs(gradePoint - Number(targetGradePoint));
+  return Math.abs(
+    gradePoint - Number(targetGradePoint)
+  );
 }
 
 /* =========================
    TARGET SGPA: COMBINATIONS
 ========================= */
 function calculateTargetCombinations() {
-  const resultsBox = document.getElementById("target-combinations");
+  const resultsBox = document.getElementById(
+    "target-combinations"
+  );
 
   if (!resultsBox) return;
 
   resultsBox.innerHTML = "";
 
-  if (calculatorMode !== "target" || !targetGradePoint) return;
+  if (
+    calculatorMode !== "target" ||
+    !targetGradePoint
+  ) {
+    return;
+  }
 
   const rows = [...subjectRows].filter(function(row) {
     return row.style.display !== "none";
@@ -568,15 +757,18 @@ function calculateTargetCombinations() {
 
   if (subjects.some(subject => subject.options.length === 0)) {
     resultsBox.textContent =
-      "No valid combination is possible because at least one subject " +
-      "cannot achieve a passing overall grade while meeting the 40% " +
-      "theory minimum. Check your IA and CA/practical marks.";
+      "At least one subject has no valid passing grade-point option " +
+      "under the current marks, 40% theory minimum, and selected " +
+      "maximum-GP limits. Check your marks or raise/remove that " +
+      "subject's GP cap.";
 
     return;
   }
 
   if (subjects.length === 0) {
-    resultsBox.textContent = "No subjects available to calculate.";
+    resultsBox.textContent =
+      "No subjects available to calculate.";
+
     return;
   }
 
@@ -586,7 +778,9 @@ function calculateTargetCombinations() {
   );
 
   if (totalCredits <= 0) {
-    resultsBox.textContent = "Could not calculate total credits.";
+    resultsBox.textContent =
+      "Could not calculate total credits.";
+
     return;
   }
 
@@ -607,20 +801,24 @@ function calculateTargetCombinations() {
     for (const [score, paths] of combinations) {
       for (const path of paths) {
         for (const option of subject.options) {
-          const newScore =
-            score + Math.round(
-              subject.credits * option.gradePoint * 100
-            );
+          const newScore = score + Math.round(
+            subject.credits * option.gradePoint * 100
+          );
+
+          const preferencePenalty =
+            targetModel === "difficulty"
+              ? getDifficultyPenalty(
+                  subject.difficulty,
+                  option.gradePoint
+                )
+              : 0;
 
           const candidate = {
-            totalTheory: path.totalTheory + option.theoryMarks,
+            totalTheory:
+              path.totalTheory + option.theoryMarks,
 
             preferencePenalty:
-              path.preferencePenalty +
-              getDifficultyPenalty(
-                subject.difficulty,
-                option.gradePoint
-              ),
+              path.preferencePenalty + preferencePenalty,
 
             choices: [
               ...path.choices,
@@ -656,7 +854,9 @@ function calculateTargetCombinations() {
   }
 
   // The target is a minimum, not an exact SGPA.
-  const requiredScore = targetGradePoint * totalCredits * 100;
+  const requiredScore =
+    targetGradePoint * totalCredits * 100;
+
   const valid = [];
 
   for (const [score, paths] of combinations) {
@@ -672,28 +872,44 @@ function calculateTargetCombinations() {
     }
   }
 
+  // If the target is impossible, show the maximum achievable SGPA.
   if (valid.length === 0) {
-    const maximumScore = Math.max(...combinations.keys());
-    const maximumSGPA = maximumScore / 100 / totalCredits;
+    const maximumScore = Math.max(
+      ...combinations.keys()
+    );
+
+    const maximumSGPA =
+      maximumScore / 100 / totalCredits;
 
     const message = document.createElement("p");
 
     message.textContent =
-      `Target not possible with these IA and CA/practical marks. ` +
-      `Maximum possible SGPA: ${maximumSGPA.toFixed(2)}.`;
+      `Target not possible under the current marks and ` +
+      `maximum-GP limits. Maximum possible SGPA: ` +
+      `${maximumSGPA.toFixed(2)}.`;
 
     resultsBox.appendChild(message);
     return;
   }
 
-  // Prioritize subject difficulty, then the closest SGPA above target,
-  // then lower combined theory marks.
-  valid.sort((a, b) =>
-    a.preferencePenalty - b.preferencePenalty ||
-    (a.sgpa - Number(targetGradePoint)) -
-      (b.sgpa - Number(targetGradePoint)) ||
-    a.totalTheory - b.totalTheory
-  );
+  // Difficulty model: rank by difficulty preference.
+  // GP model: rank by closeness to the target, then theory marks.
+  valid.sort((a, b) => {
+    if (targetModel === "difficulty") {
+      return (
+        a.preferencePenalty - b.preferencePenalty ||
+        (a.sgpa - Number(targetGradePoint)) -
+          (b.sgpa - Number(targetGradePoint)) ||
+        a.totalTheory - b.totalTheory
+      );
+    }
+
+    return (
+      (a.sgpa - Number(targetGradePoint)) -
+        (b.sgpa - Number(targetGradePoint)) ||
+      a.totalTheory - b.totalTheory
+    );
+  });
 
   // Avoid duplicate combinations.
   const unique = [];
@@ -701,7 +917,9 @@ function calculateTargetCombinations() {
 
   for (const item of valid) {
     const key = item.choices
-      .map(choice => `${choice.gradePoint}:${choice.theoryMarks}`)
+      .map(choice =>
+        `${choice.gradePoint}:${choice.theoryMarks}`
+      )
       .join("|");
 
     if (!seen.has(key)) {
@@ -709,10 +927,10 @@ function calculateTargetCombinations() {
       unique.push(item);
     }
 
-    if (unique.length === 10) break;
+    if (unique.length === 15) break;
   }
 
-  // Results heading
+  // Results heading.
   const heading = document.createElement("h3");
 
   heading.textContent =
@@ -721,14 +939,22 @@ function calculateTargetCombinations() {
 
   const note = document.createElement("p");
 
-  note.textContent =
-    "Up to 10 valid combinations are shown. They are ranked using " +
-    "your subject difficulty choices, then by how closely they meet " +
-    "the target SGPA. Each combination meets or exceeds your target. " +
-    "GP means grade points; theory marks shown are the minimum needed " +
-    "for that GP.";
+  if (targetModel === "difficulty") {
+    note.textContent =
+      "Up to 15 valid combinations are shown. They are ranked " +
+      "using your subject difficulty choices, then by how closely " +
+      "they meet the target SGPA. Each combination meets or " +
+      "exceeds your target. GP means grade points; theory marks " +
+      "shown are the minimum needed for that GP.";
+  } else {
+    note.textContent =
+      "Up to 15 valid combinations are shown. Each subject's " +
+      "selected maximum GP is treated as a limit, not an exact " +
+      "grade point. Blank selections have no GP limit. Each " +
+      "combination meets or exceeds your target.";
+  }
 
-  // Results table
+  // Results table.
   const table = document.createElement("table");
   table.className = "target-results-table";
 

@@ -314,3 +314,51 @@ h2 {
   text-align: center;
   border: 1px solid #ddd;
 }
+
+/* Target model selection */
+.target-model-controls {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.target-model-controls h3 {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.calculator-modal.target-mode .target-model-controls {
+  display: flex;
+}
+
+.target-model-btn {
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.target-model-btn.active {
+  background: #26364a;
+  color: white;
+}
+
+/* Maximum GP column */
+.grade-cap-column {
+  display: none;
+}
+
+.calculator-modal.grade-point-model .difficulty-column {
+  display: none !important;
+}
+
+.calculator-modal.grade-point-model .grade-cap-column {
+  display: table-cell;
+}
+
+.subject-max-gp {
+  min-width: 85px;
+  max-width: 100%;
+  padding: 7px;
+  box-sizing: border-box;
+}
