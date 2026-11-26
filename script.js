@@ -235,6 +235,9 @@ document.addEventListener("input", function(event) {
 /* =========================
    GRADE CALCULATOR
 ========================= */
+/* =========================
+   GRADE CALCULATOR
+========================= */
 function getGrade(percentage) {
   if (percentage >= 90) {
     return { gradePoint: 10, grade: "O" };
@@ -252,16 +255,16 @@ function getGrade(percentage) {
     return { gradePoint: 7, grade: "B+" };
   }
 
-  if (percentage >= 55) {
+  if (percentage >= 50) {
     return { gradePoint: 6, grade: "B" };
   }
 
-  if (percentage >= 50) {
+  if (percentage >= 40) {
     return { gradePoint: 5, grade: "C" };
   }
 
-  if (percentage >= 40) {
-    return { gradePoint: 4, grade: "P" };
+  if (percentage >= 30) {
+    return { gradePoint: 4, grade: "D" };
   }
 
   return { gradePoint: 0, grade: "F" };

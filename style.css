@@ -362,3 +362,33 @@ h2 {
   padding: 7px;
   box-sizing: border-box;
 }
+
+/* =========================
+   GRADING DISCLAIMER
+========================= */
+
+.grading-disclaimer {
+  max-width: 850px;
+  margin: 15px auto 30px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid #64748b;
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.grading-disclaimer strong {
+  color: #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  .grading-disclaimer {
+    font-size: 11px;
+    padding: 10px 12px;
+    margin: 12px auto 24px;
+  }
+}
