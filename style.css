@@ -7,22 +7,25 @@ body {
 
 /* ---------- Modal Layout ---------- */
 .modal {
-  background-color: #2c3e50; 
+  background-color: #2c3e50;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .course-modal,
 .semester-modal,
 .action-modal,
-.target-modal {
+.target-modal,
+.track-modal {
   width: 500px;
-  height: 70vh;
+  min-height: 70vh;
   display: flex;
   gap: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  box-sizing: border-box;
+  padding: 25px;
 }
 
 .calculator-modal {
@@ -32,8 +35,9 @@ body {
   padding: 40px;
   background: #1f2937;
   border-radius: 18px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
-
 
 /* ---------- Headings ---------- */
 h1 {
@@ -47,21 +51,17 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* This block ONLY runs on mobile screens */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 38px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-}
-
 .subtitle {
   font-weight: 600;
   opacity: 0.95;
   font-size: 20px;
   color: white;
   margin-bottom: 60px;
+}
+
+h2 {
+  margin-bottom: 35px;
+  color: white;
 }
 
 /* ---------- Buttons ---------- */
@@ -99,9 +99,22 @@ button:active {
   gap: 15px;
 }
 
+.track-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  align-items: center;
+}
+
+.track-buttons button {
+  width: 100%;
+  max-width: 330px;
+}
+
 /* ---------- Utility Classes ---------- */
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 /* ---------- Calculator Table ---------- */
@@ -143,7 +156,6 @@ tr:nth-child(odd) {
   background: rgba(51, 65, 85, 0.85);
 }
 
-
 /* ---------- Form Controls ---------- */
 input,
 select {
@@ -153,7 +165,6 @@ select {
   font-size: 14px;
   color: #1e293b;
   background: #ffffff;
-  background-color: #ffffff;
   outline: none;
   text-align: center;
   border: 1px solid #cbd5e1;
@@ -208,19 +219,7 @@ td:first-child {
   background: white;
 }
 
-h2 {
-  margin-bottom: 35px;
-  color: white;
-}
-
-
-/* Keep target combinations inside the calculator */
-.calculator-modal {
-  box-sizing: border-box;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
+/* ---------- Target Results ---------- */
 #target-combinations {
   box-sizing: border-box;
   width: 100%;
@@ -250,72 +249,27 @@ h2 {
   border: 1px solid #ddd;
 }
 
-/* =========================
-   TARGET SGPA TABLE
-========================= */
-
-.calculator-modal {
-  box-sizing: border-box;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* Hide difficulty in Estimated SGPA mode */
+/* ---------- Target SGPA Mode ---------- */
 .calculator-modal .difficulty-column {
   display: none;
 }
 
-/* Show difficulty in Target SGPA mode */
 .calculator-modal.target-mode .difficulty-column {
   display: table-cell;
 }
 
-/* Hide theory columns in Target SGPA mode */
 .calculator-modal.target-mode .theory-total-column,
 .calculator-modal.target-mode .theory-marks-column {
   display: none !important;
 }
 
-/* Difficulty dropdown */
 .subject-difficulty {
   min-width: 120px;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-/* Target combinations container */
-#target-combinations {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-}
-
-/* Allow the results table to scroll horizontally */
-.target-results-wrapper {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Results table */
-.target-results-table {
-  width: max-content;
-  min-width: 100%;
-  border-collapse: collapse;
-  white-space: nowrap;
-}
-
-.target-results-table th,
-.target-results-table td {
-  padding: 8px 12px;
-  text-align: center;
-  border: 1px solid #ddd;
-}
-
-/* Target model selection */
+/* ---------- Target Model Selection ---------- */
 .target-model-controls {
   display: none;
   flex-wrap: wrap;
@@ -343,7 +297,7 @@ h2 {
   color: white;
 }
 
-/* Maximum GP column */
+/* ---------- Maximum GP Column ---------- */
 .grade-cap-column {
   display: none;
 }
@@ -363,10 +317,7 @@ h2 {
   box-sizing: border-box;
 }
 
-/* =========================
-   GRADING DISCLAIMER
-========================= */
-
+/* ---------- Grading Disclaimer ---------- */
 .grading-disclaimer {
   max-width: 850px;
   margin: 15px auto 30px;
@@ -385,10 +336,136 @@ h2 {
   color: #e2e8f0;
 }
 
+/* ---------- Mobile Screens ---------- */
 @media (max-width: 768px) {
+  h1 {
+    font-size: 38px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .course-modal,
+  .semester-modal,
+  .action-modal,
+  .target-modal,
+  .track-modal {
+    width: 95%;
+    min-height: 70vh;
+  }
+
+  .calculator-modal {
+    width: 98%;
+    padding: 18px 12px;
+  }
+
   .grading-disclaimer {
     font-size: 11px;
     padding: 10px 12px;
     margin: 12px auto 24px;
+  }
+
+  th {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+
+  td {
+    padding: 10px 6px;
+    font-size: 12px;
+  }
+
+  .sgpa-card {
+    max-width: 80%;
+  }
+}
+
+
+/* ==========================================
+   FIXED ACTION MODAL BUTTON ALIGNMENT
+========================================== */
+
+.action-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+}
+
+.action-modal .subtitle {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.action-buttons button {
+  width: auto;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+
+/* ==========================================
+   INCREASE SUBJECT COLUMN WIDTH
+   Applies to all semesters and degree types
+========================================== */
+
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+  min-width: 170px;
+  width: 170px;
+}
+
+.table-container td:nth-child(2) input,
+.table-container td:nth-child(2) select {
+  width: 145px;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.table-container td:nth-child(2) .subject-name {
+  width: 145px;
+  max-width: none;
+}
+
+
+/* ==========================================
+   MOBILE RESPONSIVENESS
+========================================== */
+
+@media (max-width: 768px) {
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    max-width: 330px;
+    white-space: normal;
+  }
+
+  .table-container th:nth-child(2),
+  .table-container td:nth-child(2) {
+    min-width: 145px;
+    width: 145px;
+  }
+
+  .table-container td:nth-child(2) input,
+  .table-container td:nth-child(2) select,
+  .table-container td:nth-child(2) .subject-name {
+    width: 125px;
   }
 }

@@ -13,7 +13,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DU SGPA Calculator</title>
+
   <link rel="stylesheet" href="style.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -21,6 +23,7 @@
 
 <body>
   <div class="app">
+
     <h1>DU SGPA Calculator</h1>
 
     <!-- Course Selection -->
@@ -31,6 +34,7 @@
         <button class="course-btn" data-course="honours" id="honoursBtn">
           Honours Degree
         </button>
+
         <button class="course-btn" data-course="programme" id="programmeBtn">
           Programme Degree
         </button>
@@ -48,6 +52,23 @@
         <button class="semester-btn" data-semester="4">Semester 4</button>
         <button class="semester-btn" data-semester="5">Semester 5</button>
         <button class="semester-btn" data-semester="6">Semester 6</button>
+        <button class="semester-btn" data-semester="7">Semester 7</button>
+        <button class="semester-btn" data-semester="8">Semester 8</button>
+      </div>
+    </div>
+
+    <!-- Fourth-Year Programme Track Selection -->
+    <div class="modal track-modal hidden">
+      <h2 class="subtitle">Choose your fourth-year track</h2>
+
+      <div class="track-buttons">
+        <button class="track-btn" data-track="academic">
+          Academic Track
+        </button>
+
+        <button class="track-btn" data-track="coursework">
+          Coursework + Skill-Based Track
+        </button>
       </div>
     </div>
 
@@ -56,8 +77,13 @@
       <h2 class="subtitle">Choose the action you want to perform</h2>
 
       <div class="action-buttons">
-        <button id="estimatedSGPABtn">Calculate Estimated SGPA</button>
-        <button id="targetMarksBtn">Calculate Target Marks</button>
+        <button id="estimatedSGPABtn">
+          Calculate Estimated SGPA
+        </button>
+
+        <button id="targetMarksBtn">
+          Calculate Target Marks
+        </button>
       </div>
     </div>
 
@@ -76,6 +102,7 @@
 
     <!-- Calculator -->
     <div class="modal calculator-modal hidden">
+
       <h2 id="calculator-heading">Estimated SGPA Calculator</h2>
 
       <div class="table-container">
@@ -86,212 +113,22 @@
               <th>Subject</th>
               <th>Type</th>
               <th>Credits</th>
-              <th>IA Total</th>
-              <th>IA Marks Scored</th>
-              <th>CA/Practical Total</th>
-              <th>CA/Practical Marks Scored</th>
+              <th id="ia-total-heading">IA Total</th>
+              <th id="ia-marks-heading">IA Marks Scored</th>
+              <th class="practical-column">CA/Practical Total</th>
+              <th class="practical-column">CA/Practical Marks Scored</th>
               <th class="theory-total-column">Theory Total</th>
               <th class="theory-marks-column">Expected Theory Marks</th>
               <th class="difficulty-column">Difficulty</th>
+              <th class="grade-cap-column">Maximum GP</th>
               <th class="total-column">Total</th>
               <th class="gp-column">Grade Points</th>
               <th class="grade-column">Grade</th>
             </tr>
           </thead>
 
-          <tbody>
-            <!-- Subject 1 -->
-            <tr class="subject-row" id="subject1">
-              <td>1</td>
-              <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
-              <td class="subject-type">DSC</td>
-              <td class="credit-row">4</td>
-              <td class="ia-total">30</td>
-              <td><input class="marks-input ia-marks" type="number" min="0" max="30" step="0.01" placeholder="0"></td>
-              <td class="practical-total">40</td>
-              <td><input class="marks-input practical-marks" type="number" min="0" max="40" step="0.01" placeholder="0"></td>
-              <td class="theory-total theory-total-column">90</td>
-              <td class="theory-marks-column"><input class="marks-input theory-marks" type="number" min="0" max="90" step="0.01" placeholder="0"></td>
-              <td class="difficulty-column">
-                <select class="subject-difficulty" aria-label="Subject 1 difficulty">
-                  <option value="difficult">Difficult</option>
-                  <option value="moderate" selected>Moderate</option>
-                  <option value="easy">Easy</option>
-                </select>
-              </td>
-              <td class="subject-total total-column">--</td>
-              <td class="grade-points gp-column">--</td>
-              <td class="grade grade-column">--</td>
-            </tr>
-
-            <!-- Subject 2 -->
-            <tr class="subject-row" id="subject2">
-              <td>2</td>
-              <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
-              <td class="subject-type">DSC</td>
-              <td class="credit-row">4</td>
-              <td class="ia-total">30</td>
-              <td><input class="marks-input ia-marks" type="number" min="0" max="30" step="0.01" placeholder="0"></td>
-              <td class="practical-total">40</td>
-              <td><input class="marks-input practical-marks" type="number" min="0" max="40" step="0.01" placeholder="0"></td>
-              <td class="theory-total theory-total-column">90</td>
-              <td class="theory-marks-column"><input class="marks-input theory-marks" type="number" min="0" max="90" step="0.01" placeholder="0"></td>
-              <td class="difficulty-column">
-                <select class="subject-difficulty" aria-label="Subject 2 difficulty">
-                  <option value="difficult">Difficult</option>
-                  <option value="moderate" selected>Moderate</option>
-                  <option value="easy">Easy</option>
-                </select>
-              </td>
-              <td class="subject-total total-column">--</td>
-              <td class="grade-points gp-column">--</td>
-              <td class="grade grade-column">--</td>
-            </tr>
-
-            <!-- Subject 3 -->
-            <tr class="subject-row" id="subject3">
-              <td>3</td>
-              <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
-              <td class="subject-type">DSC</td>
-              <td class="credit-row">4</td>
-              <td class="ia-total">30</td>
-              <td><input class="marks-input ia-marks" type="number" min="0" max="30" step="0.01" placeholder="0"></td>
-              <td class="practical-total">40</td>
-              <td><input class="marks-input practical-marks" type="number" min="0" max="40" step="0.01" placeholder="0"></td>
-              <td class="theory-total theory-total-column">90</td>
-              <td class="theory-marks-column"><input class="marks-input theory-marks" type="number" min="0" max="90" step="0.01" placeholder="0"></td>
-              <td class="difficulty-column">
-                <select class="subject-difficulty" aria-label="Subject 3 difficulty">
-                  <option value="difficult">Difficult</option>
-                  <option value="moderate" selected>Moderate</option>
-                  <option value="easy">Easy</option>
-                </select>
-              </td>
-              <td class="subject-total total-column">--</td>
-              <td class="grade-points gp-column">--</td>
-              <td class="grade grade-column">--</td>
-            </tr>
-
-            <!-- Subject 4 -->
-            <tr class="subject-row" id="subject4">
-              <td>4</td>
-              <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
-              <td class="subject-type">
-                <select class="dse-ge-type">
-                  <option value="" disabled selected>Select your type</option>
-                  <option value="dse">DSE</option>
-                  <option value="ge">GE (Theory)</option>
-                  <option value="gePractical">GE (Theory + Practical)</option>
-                </select>
-              </td>
-              <td class="credit-row">4</td>
-              <td class="ia-total">30</td>
-              <td><input class="marks-input ia-marks" type="number" min="0" max="30" step="0.01" placeholder="0"></td>
-              <td class="practical-total">40</td>
-              <td><input class="marks-input practical-marks" type="number" min="0" max="40" step="0.01" placeholder="0"></td>
-              <td class="theory-total theory-total-column">90</td>
-              <td class="theory-marks-column"><input class="marks-input theory-marks" type="number" min="0" max="90" step="0.01" placeholder="0"></td>
-              <td class="difficulty-column">
-                <select class="subject-difficulty" aria-label="Subject 4 difficulty">
-                  <option value="difficult">Difficult</option>
-                  <option value="moderate" selected>Moderate</option>
-                  <option value="easy">Easy</option>
-                </select>
-              </td>
-              <td class="subject-total total-column">--</td>
-              <td class="grade-points gp-column">--</td>
-              <td class="grade grade-column">--</td>
-            </tr>
-
-            <!-- Subject 5 -->
-            <tr class="subject-row" id="subject5">
-              <td>5</td>
-              <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
-              <td class="subject-type">
-                <select class="sec-vac-type">
-                  <option value="" disabled selected>Select your type</option>
-                  <option value="secprac">SEC Practical</option>
-                  <option value="secnonprac">SEC Non-Practical</option>
-                </select>
-              </td>
-              <td class="credit-row">2</td>
-              <td class="ia-total">10</td>
-              <td><input class="marks-input ia-marks" type="number" min="0" max="10" step="0.01" placeholder="0"></td>
-              <td class="practical-total">40</td>
-              <td><input class="marks-input practical-marks" type="number" min="0" max="40" step="0.01" placeholder="0"></td>
-              <td class="theory-total theory-total-column">30</td>
-              <td class="theory-marks-column"><input class="marks-input theory-marks" type="number" min="0" max="30" step="0.01" placeholder="0"></td>
-              <td class="difficulty-column">
-                <select class="subject-difficulty" aria-label="Subject 5 difficulty">
-                  <option value="difficult">Difficult</option>
-                  <option value="moderate" selected>Moderate</option>
-                  <option value="easy">Easy</option>
-                </select>
-              </td>
-              <td class="subject-total total-column">--</td>
-              <td class="grade-points gp-column">--</td>
-              <td class="grade grade-column">--</td>
-            </tr>
-
-            <!-- Subject 6 -->
-            <tr class="subject-row" id="subject6">
-              <td>6</td>
-              <td><input class="subject-name" type="text" placeholder="Subject Name"></td>
-              <td class="subject-type">
-                <select class="sec-vac-type">
-                  <option value="" disabled selected>Select your type</option>
-                  <option value="vacprac">VAC Practical</option>
-                  <option value="vacnonprac">VAC Non-Practical</option>
-                </select>
-              </td>
-              <td class="credit-row">2</td>
-              <td class="ia-total">10</td>
-              <td><input class="marks-input ia-marks" type="number" min="0" max="10" step="0.01" placeholder="0"></td>
-              <td class="practical-total">40</td>
-              <td><input class="marks-input practical-marks" type="number" min="0" max="40" step="0.01" placeholder="0"></td>
-              <td class="theory-total theory-total-column">30</td>
-              <td class="theory-marks-column"><input class="marks-input theory-marks" type="number" min="0" max="30" step="0.01" placeholder="0"></td>
-              <td class="difficulty-column">
-                <select class="subject-difficulty" aria-label="Subject 6 difficulty">
-                  <option value="difficult">Difficult</option>
-                  <option value="moderate" selected>Moderate</option>
-                  <option value="easy">Easy</option>
-                </select>
-              </td>
-              <td class="subject-total total-column">--</td>
-              <td class="grade-points gp-column">--</td>
-              <td class="grade grade-column">--</td>
-            </tr>
-
-            <!-- Subject 7 -->
-            <tr class="subject-row" id="subject7">
-              <td>7</td>
-              <td class="subject-name">
-                <select class="aec-subject">
-                  <option value="" disabled selected>Subject Name</option>
-                  <option value="evs">EVS</option>
-                  <option value="hindi">Hindi</option>
-                </select>
-              </td>
-              <td class="subject-type">AEC</td>
-              <td class="credit-row">2</td>
-              <td class="ia-total">10</td>
-              <td><input class="marks-input ia-marks" type="number" min="0" max="10" step="0.01" placeholder="0"></td>
-              <td class="practical-total">40</td>
-              <td><input class="marks-input practical-marks" type="number" min="0" max="40" step="0.01" placeholder="0"></td>
-              <td class="theory-total theory-total-column">30</td>
-              <td class="theory-marks-column"><input class="marks-input theory-marks" type="number" min="0" max="30" step="0.01" placeholder="0"></td>
-              <td class="difficulty-column">
-                <select class="subject-difficulty" aria-label="Subject 7 difficulty">
-                  <option value="difficult">Difficult</option>
-                  <option value="moderate" selected>Moderate</option>
-                  <option value="easy">Easy</option>
-                </select>
-              </td>
-              <td class="subject-total total-column">--</td>
-              <td class="grade-points gp-column">--</td>
-              <td class="grade grade-column">--</td>
-            </tr>
+          <tbody id="subjects-body">
+            <!-- Subject rows are generated through JavaScript -->
           </tbody>
         </table>
       </div>
@@ -310,6 +147,7 @@
 
       <!-- Target Combinations -->
       <div id="target-combinations"></div>
+
     </div>
   </div>
 
