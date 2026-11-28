@@ -469,3 +469,20 @@ td:first-child {
     width: 125px;
   }
 }
+
+
+/* ---------- Slightly Wider Type Column ---------- */
+
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) {
+  min-width: 90px;
+  width: 90px;
+}
+
+@media (max-width: 768px) {
+  .table-container th:nth-child(3),
+  .table-container td:nth-child(3) {
+    min-width: 80px;
+    width: 80px;
+  }
+}
